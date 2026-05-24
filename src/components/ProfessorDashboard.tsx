@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlusCircle, BookOpen, CheckCircle, Clock, Edit2, Trash2 } from "lucide-react";
 import { fetchApi } from "@/lib/api";
-import { UserData } from "@/app/page";
+import { UserData } from "@/app/dashboard/page";
 import { GamifiedLoading } from "@/components/GamifiedLoading";
 
 export function ProfessorDashboard({ user }: { user: UserData }) {

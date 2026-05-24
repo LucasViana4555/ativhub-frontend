@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shield, Award, CheckCircle2, Target, Edit2, Trash2, Trophy } from "lucide-react";
 import { fetchApi } from "@/lib/api";
-import { UserData } from "@/app/page";
+import { UserData } from "@/app/dashboard/page";
 import { GamifiedLoading } from "@/components/GamifiedLoading";
 
 export function AlunoDashboard({ user }: { user: UserData }) {
