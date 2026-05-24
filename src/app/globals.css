@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-purple-900: #1A1025;
+  --color-purple-800: #2D1B42;
+  --color-purple-700: #4B2A75;
+  --color-purple-600: #6A3A9E;
+  --color-purple-500: #8B5CF6;
+  
+  --color-neon-green: #FF6600; /* Orange instead of green */
+  --color-neon-green-glow: rgba(255, 102, 0, 0.4);
+  
+  --color-slate-900: #0F172A;
+  --color-slate-800: #1E293B;
+  --color-slate-700: #334155;
+  
+  --color-background: var(--color-purple-900);
+  --color-foreground: #F8FAFC;
+}
+
+@layer base {
+  :root {
+    --background: #1A1025;
+    --foreground: #F8FAFC;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+}
+
+/* Custom Utilities for Glowing Effects */
+@layer utilities {
+  .glow-green {
+    box-shadow: 0 0 10px var(--color-neon-green-glow), 0 0 20px var(--color-neon-green-glow);
+  }
+  .glow-purple {
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.3), 0 0 30px rgba(139, 92, 246, 0.2);
+  }
+  .glass-panel {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
