@@ -123,7 +123,7 @@ export default function LandingPage() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: any = {
     hidden: { y: 40, opacity: 0, scale: 0.9 },
     visible: {
       y: 0,
