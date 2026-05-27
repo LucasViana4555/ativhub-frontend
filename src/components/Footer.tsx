@@ -85,7 +85,7 @@ export function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-sm text-gray-500 font-medium flex items-center gap-2">
-            © {new Date().getFullYear()} AtivHub. Todos os direitos reservados. Feito por Lucas Viana da Silva.
+            © {new Date().getFullYear()} AtivHub. Todos os direitos reservados.
           </div>
           
           <motion.div 
