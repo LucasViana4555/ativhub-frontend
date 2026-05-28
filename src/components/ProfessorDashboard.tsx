@@ -398,7 +398,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
                     onChange={e => setTitle(e.target.value)}
                     disabled={isCreating}
                     className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all disabled:opacity-50"
-                    placeholder="Ex: Desafio do Dragão em React"
+                    placeholder="Ex: Desafio de Matemática: Tabuada do 7"
                   />
                 </div>
                 <div>

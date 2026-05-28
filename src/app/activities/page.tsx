@@ -216,8 +216,8 @@ export default function ActivitiesPage() {
                     value={answerText}
                     onChange={e => setAnswerText(e.target.value)}
                     disabled={isSubmitting}
-                    className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all min-h-[200px] font-mono text-sm disabled:opacity-50"
-                    placeholder="// Digite seu código ou resposta heroica aqui..."
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all min-h-[200px] text-sm disabled:opacity-50"
+                    placeholder="Digite sua resposta aqui..."
                   />
                 </div>
                 
@@ -228,7 +228,7 @@ export default function ActivitiesPage() {
                     disabled={isSubmitting}
                     className="flex-1 px-4 py-3 rounded-xl bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 transition-colors disabled:opacity-50"
                   >
-                    Recuar
+                    Voltar
                   </button>
                   <button 
                     type="submit"
