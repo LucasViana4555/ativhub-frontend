@@ -18,7 +18,7 @@ export default function ProfessorLoginPage() {
   const handleGoogleLogin = () => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("oauth_role", "PROFESSOR");
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://ativhub-backend.onrender.com";
       window.location.href = `${apiUrl}/oauth2/authorization/google`;
     }
   };
