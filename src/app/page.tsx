@@ -184,8 +184,11 @@ export default function LandingPage() {
           className="flex items-center gap-2 cursor-pointer"
         >
           {/* logo */}
-          <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text">
-            AtivHub
+          <div className="flex items-center gap-2">
+            <Gamepad2 className="w-6 h-6 text-neon-green" />
+            <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text">
+              AtivHub
+            </div>
           </div>
         </motion.div>
 
@@ -257,7 +260,7 @@ export default function LandingPage() {
               Dar o Play <Gamepad2 size={28} className="group-hover:rotate-12 transition-transform" />
             </motion.button>
           </Link>
-          <Link href="/auth/login">
+          <Link href="/professor">
             <motion.button
               whileHover={{ scale: 1.05, y: -5, backgroundColor: "rgba(255,255,255,0.1)" }}
               whileTap={{ scale: 0.95 }}

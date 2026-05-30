@@ -8,7 +8,8 @@ import {
   MessageCircle,
   Sparkles,
   Target,
-  Zap
+  Zap,
+  Gamepad2
 } from "lucide-react";
 
 export function Footer() {
@@ -28,9 +29,12 @@ export function Footer() {
           <div className="col-span-1 md:col-span-2">
             <motion.div 
               whileHover={{ scale: 1.05 }}
-              className="inline-block text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text mb-4 cursor-default"
+              className="flex items-center gap-2 mb-4"
             >
-              AtivHub
+              <Gamepad2 className="w-8 h-8 text-neon-green" />
+              <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text cursor-default">
+                AtivHub
+              </div>
             </motion.div>
             <p className="text-gray-400 max-w-sm leading-relaxed mb-6">
               Gamificando o ensino e transformando a jornada de aprendizado em uma experiência épica e inesquecível.

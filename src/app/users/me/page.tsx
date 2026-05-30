@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { User, Mail, Shield, Award, ArrowLeft } from "lucide-react";
+import { User, Mail, Shield, Award, ArrowLeft, Gamepad2 } from "lucide-react";
 import { fetchApi, getAuthToken } from "@/lib/api";
 import { GamifiedLoading } from "@/components/GamifiedLoading";
 
@@ -59,8 +59,11 @@ export default function ProfilePage() {
 
       {/* Top Navbar Simple for Navigation */}
       <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-50">
-        <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text cursor-pointer" onClick={() => router.push("/")}>
-          AtivHub
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/")}>
+          <Gamepad2 className="w-6 h-6 text-neon-green" />
+          <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text">
+            AtivHub
+          </div>
         </div>
         <button onClick={() => router.push("/")} className="text-slate-300 hover:text-white transition-colors font-semibold flex items-center gap-2">
           <ArrowLeft size={18} /> Voltar

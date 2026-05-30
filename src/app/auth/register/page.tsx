@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
-import { UserPlus, Eye, EyeOff } from "lucide-react";
+import { UserPlus, Eye, EyeOff, Gamepad2 } from "lucide-react";
 import { AuthBackground } from "@/components/AuthBackground";
 
 export default function RegisterPage() {
@@ -59,10 +59,15 @@ export default function RegisterPage() {
         className="glass-panel p-8 rounded-3xl w-full max-w-md relative z-10"
       >
         <div className="text-center mb-8">
-          <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text mb-2 inline-block">
-            AtivHub
+          <div className="flex flex-col items-center justify-center mb-2">
+            <div className="flex items-center gap-2">
+              <Gamepad2 className="w-8 h-8 text-neon-green" />
+              <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text mb-2 inline-block">
+                AtivHub
+              </div>
+            </div>
           </div>
-          <p className="text-slate-400">Junte-se à plataforma AtivHub</p>
+          <p className="text-slate-400">Junte-se à plataforma AtivHub como Aluno</p>
         </div>
 
         {error && (
@@ -114,17 +119,7 @@ export default function RegisterPage() {
               </button>
             </div>
           </div>
-          <div>
-            <label className="block text-slate-300 text-sm font-bold mb-2">Cargo</label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
-            >
-              <option value="ALUNO">Aluno</option>
-              <option value="PROFESSOR">Professor</option>
-            </select>
-          </div>
+
           
           <button
             type="submit"

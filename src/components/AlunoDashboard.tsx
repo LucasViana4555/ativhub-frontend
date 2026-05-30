@@ -2,18 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Award, CheckCircle2, Target, Edit2, Trash2, Trophy } from "lucide-react";
+import { Shield, Award, CheckCircle2, Target, Edit2, Trash2 } from "lucide-react";
 import { fetchApi } from "@/lib/api";
-import { UserData } from "@/app/dashboard/page";
+import { UserData } from "@/store/StudentContext";
 import { GamifiedLoading } from "@/components/GamifiedLoading";
 
 export function AlunoDashboard({ user }: { user: UserData }) {
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // States do ranking
-  const [ranking, setRanking] = useState<any[]>([]);
-  const [loadingRanking, setLoadingRanking] = useState(true);
 
   // States para editar
   const [editingSubId, setEditingSubId] = useState<string | null>(null);
@@ -38,21 +34,8 @@ export function AlunoDashboard({ user }: { user: UserData }) {
     }
   };
 
-  const loadRanking = async () => {
-    try {
-      const data = await fetchApi("/users/ranking");
-      const rankingArray = Array.isArray(data) ? data : (data?.content || data?.data || []);
-      setRanking(rankingArray);
-    } catch (err) {
-      console.error("Erro ao carregar ranking", err);
-    } finally {
-      setLoadingRanking(false);
-    }
-  };
-
   useEffect(() => {
     loadSubmissions();
-    loadRanking();
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -140,55 +123,6 @@ export function AlunoDashboard({ user }: { user: UserData }) {
           </div>
         </div>
       </motion.div>
-
-      {/* Ranking */}
-      <div className="mb-12">
-        <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-          <Trophy className="text-yellow-400" /> Ranking Global
-        </h3>
-        <div className="glass-panel rounded-3xl p-6">
-          {loadingRanking ? (
-            <div className="py-8"><GamifiedLoading text="Carregando Ranking..." className="scale-75" /></div>
-          ) : ranking.length === 0 ? (
-            <p className="text-slate-500 text-center py-8">Nenhum aluno no ranking ainda.</p>
-          ) : (
-            <div className="space-y-4">
-              {ranking.map((item, i) => {
-                const rUser = item.user || item;
-                // nomes mappeados do RankingResponseDTO
-                const subsCount = item.answeredActivitiesCount ?? item.submissionsCount ?? 0;
-                const itemXp = rUser.xp || 0;
-
-                // backend retorna o email
-                const avatarSeed = rUser.email || rUser.name || 'guest';
-
-                const pos = item.position || (i + 1);
-
-                return (
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    key={rUser.id || rUser.name || i}
-                    className={`flex items-center gap-4 p-4 rounded-2xl border ${pos === 1 ? 'bg-yellow-500/10 border-yellow-500/50' : pos === 2 ? 'bg-slate-300/10 border-slate-300/50' : pos === 3 ? 'bg-amber-700/10 border-amber-700/50' : 'bg-slate-800/50 border-slate-700'}`}
-                  >
-                    <div className={`font-bold text-xl w-8 text-center ${pos === 1 ? 'text-yellow-500' : pos === 2 ? 'text-slate-300' : pos === 3 ? 'text-amber-600' : 'text-slate-500'}`}>
-                      #{pos}
-                    </div>
-                    <div className="w-12 h-12 rounded-full bg-slate-700 overflow-hidden shrink-0 border-2 border-slate-600">
-                      <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${avatarSeed}&backgroundColor=1E293B`} alt="Avatar" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-white">{rUser.name}</h4>
-                      <p className="text-xs text-slate-400">{itemXp} XP • {subsCount} missões completadas</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
 
       {/* historico */}
       <div>
