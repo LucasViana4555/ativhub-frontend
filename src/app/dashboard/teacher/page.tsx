@@ -22,7 +22,9 @@ import {
   School,
   Sparkles,
   ClipboardList,
-  Gamepad2
+  Gamepad2,
+  Menu,
+  X
 } from "lucide-react";
 import { fetchApi, getAuthToken, removeAuthToken } from "@/lib/api";
 import { GamifiedLoading } from "@/components/GamifiedLoading";
@@ -60,6 +62,7 @@ export default function TeacherDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"rooms" | "activities" | "reports">("rooms");
   const [selectedClassroomId, setSelectedClassroomId] = useState<string | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Salas State
   const [classrooms, setClassrooms] = useState<Classroom[]>([]);
@@ -498,14 +501,13 @@ export default function TeacherDashboard() {
     );
   };
 
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex">
-      
-      {/* Sidebar Fixa */}
-      <aside className="fixed top-0 left-0 bottom-0 w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between p-6 z-40 sidebar-teacher">
-        <div className="space-y-8">
-          {/* Logo B2B */}
-          <div className="mb-2">
+  // Conteúdo compartilhado da barra lateral
+  const sidebarContent = (
+    <div className="flex flex-col h-full justify-between p-6 bg-slate-900">
+      <div className="space-y-8 flex-1 flex flex-col">
+        {/* Logo B2B */}
+        <div className="flex items-center justify-between mb-2">
+          <div>
             <div className="flex items-center gap-2">
               <Gamepad2 className="w-8 h-8 text-neon-green" />
               <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text mb-2 inline-block">
@@ -514,69 +516,131 @@ export default function TeacherDashboard() {
             </div>
             <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold mt-1">Gestão Escolar B2B</p>
           </div>
-
-          {/* Navegação */}
-          <nav className="space-y-2">
-            <button 
-              onClick={() => setActiveTab("rooms")}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "rooms" ? "bg-orange-500 text-white shadow-lg shadow-orange-500/10" : "text-slate-400 hover:text-white hover:bg-slate-800"}`}
-            >
-              <Gamepad2 size={18} className={activeTab === "rooms" ? "text-white" : "text-orange-500"} />
-              <span>Suas Salas</span>
-            </button>
-            <button 
-              onClick={() => setActiveTab("activities")}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "activities" ? "bg-orange-500 text-white shadow-lg shadow-orange-500/10" : "text-slate-400 hover:text-white hover:bg-slate-800"}`}
-            >
-              <Gamepad2 size={18} className={activeTab === "activities" ? "text-white" : "text-orange-500"} />
-              <span>Atividades & Envio</span>
-              {pendingSubmissions.length > 0 && (
-                <span className="ml-auto bg-orange-600 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">
-                  {pendingSubmissions.length}
-                </span>
-              )}
-            </button>
-            <button 
-              onClick={() => setActiveTab("reports")}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all ${activeTab === "reports" ? "bg-orange-500 text-white shadow-lg shadow-orange-500/10" : "text-slate-400 hover:text-white hover:bg-slate-800"}`}
-            >
-              <Gamepad2 size={18} className={activeTab === "reports" ? "text-white" : "text-orange-500"} />
-              <span>Relatórios</span>
-            </button>
-          </nav>
-
-        </div>
-
-        {/* Perfil & Logout */}
-        <div className="border-t border-slate-850 pt-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 overflow-hidden shrink-0">
-              <img 
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}&backgroundColor=1E293B`} 
-                alt="Avatar" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="min-w-0">
-              <h4 className="text-xs font-bold text-white truncate">{user.name}</h4>
-              <p className="text-[10px] text-slate-500 truncate">{user.disciplina || user.subject || "Professor"}</p>
-            </div>
-          </div>
           <button 
-            onClick={handleLogout}
-            className="w-full py-2.5 px-4 bg-slate-800 text-red-400 hover:bg-red-950/20 hover:text-red-300 border border-slate-750 hover:border-red-900/50 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2"
+            onClick={() => setIsSidebarOpen(false)}
+            className="md:hidden text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition-colors"
           >
-            <LogOut size={14} />
-            <span>Sair do Sistema</span>
+            <X size={20} />
           </button>
         </div>
+
+        {/* Navegação */}
+        <nav className="space-y-2">
+          <button 
+            onClick={() => { setActiveTab("rooms"); setIsSidebarOpen(false); }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left ${activeTab === "rooms" ? "bg-orange-500 text-white shadow-lg shadow-orange-500/10" : "text-slate-400 hover:text-white hover:bg-slate-800"}`}
+          >
+            <Gamepad2 size={18} className={activeTab === "rooms" ? "text-white" : "text-orange-500"} />
+            <span>Suas Salas</span>
+          </button>
+          <button 
+            onClick={() => { setActiveTab("activities"); setIsSidebarOpen(false); }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left ${activeTab === "activities" ? "bg-orange-500 text-white shadow-lg shadow-orange-500/10" : "text-slate-400 hover:text-white hover:bg-slate-800"}`}
+          >
+            <Gamepad2 size={18} className={activeTab === "activities" ? "text-white" : "text-orange-500"} />
+            <span>Atividades & Envio</span>
+            {pendingSubmissions.length > 0 && (
+              <span className="ml-auto bg-orange-600 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">
+                {pendingSubmissions.length}
+              </span>
+            )}
+          </button>
+          <button 
+            onClick={() => { setActiveTab("reports"); setIsSidebarOpen(false); }}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left ${activeTab === "reports" ? "bg-orange-500 text-white shadow-lg shadow-orange-500/10" : "text-slate-400 hover:text-white hover:bg-slate-800"}`}
+          >
+            <Gamepad2 size={18} className={activeTab === "reports" ? "text-white" : "text-orange-500"} />
+            <span>Relatórios</span>
+          </button>
+        </nav>
+      </div>
+
+      {/* Perfil & Logout */}
+      <div className="border-t border-slate-850 pt-6 space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 overflow-hidden shrink-0">
+            <img 
+              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}&backgroundColor=1E293B`} 
+              alt="Avatar" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="min-w-0">
+            <h4 className="text-xs font-bold text-white truncate">{user.name}</h4>
+            <p className="text-[10px] text-slate-500 truncate">{user.disciplina || user.subject || "Professor"}</p>
+          </div>
+        </div>
+        <button 
+          onClick={handleLogout}
+          className="w-full py-2.5 px-4 bg-slate-800 text-red-400 hover:bg-red-950/20 hover:text-red-300 border border-slate-750 hover:border-red-900/50 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2"
+        >
+          <LogOut size={14} />
+          <span>Sair do Sistema</span>
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans flex flex-col md:flex-row">
+      
+      {/* Mobile Top Navbar */}
+      <div className="md:hidden fixed top-0 left-0 w-full h-16 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between z-40">
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="text-slate-300 hover:text-white p-2 hover:bg-slate-800 rounded-lg transition-colors"
+          >
+            <Menu size={24} />
+          </button>
+          <div className="flex items-center gap-2">
+            <Gamepad2 className="w-6 h-6 text-neon-green" />
+            <div className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text">
+              AtivHub
+            </div>
+          </div>
+        </div>
+        <span className="text-[10px] bg-purple-500/10 border border-purple-500/30 text-purple-400 font-bold px-2.5 py-0.5 rounded-full uppercase">
+          Mestre
+        </span>
+      </div>
+
+      {/* Desktop Sidebar (Permanent) */}
+      <aside className="hidden md:flex fixed top-0 left-0 bottom-0 w-64 bg-slate-900 border-r border-slate-800 flex-col justify-between z-40 sidebar-teacher">
+        {sidebarContent}
       </aside>
 
+      {/* Mobile Drawer (Slide-out) */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <div className="fixed inset-0 z-50 md:hidden flex">
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSidebarOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="relative w-64 max-w-[80vw] h-full z-10 shadow-2xl bg-slate-900 border-r border-slate-800"
+            >
+              {sidebarContent}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* Main Content Area */}
-      <main className="ml-64 flex-1 flex flex-col min-h-screen bg-slate-950">
+      <main className="ml-0 md:ml-64 flex-1 flex flex-col min-h-screen bg-slate-950 pt-16 md:pt-0">
         
         {/* Header */}
-        <header className="sticky top-0 bg-slate-950/80 backdrop-blur-md border-b border-slate-900 px-8 py-5 flex justify-between items-center z-30">
+        <header className="sticky top-0 bg-slate-950/80 backdrop-blur-md border-b border-slate-900 px-4 md:px-8 py-4 md:py-5 flex justify-between items-center z-30">
           <div>
             <div className="flex items-center gap-3 flex-wrap">
               <h1 className="text-xl font-bold text-white">Olá, Prof. {user.name.split(" ")[0]}</h1>
@@ -600,19 +664,19 @@ export default function TeacherDashboard() {
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setIsRoomModalOpen(true)}
-              className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-4 py-2.5 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-orange-500/10 hover:shadow-orange-500/20"
+              className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-3 sm:px-4 py-2.5 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-orange-500/10 hover:shadow-orange-500/20"
             >
               <Plus size={16} />
-              <span>Criar Nova Sala</span>
+              <span className="hidden sm:inline">Criar Nova Sala</span>
             </button>
           </div>
         </header>
 
         {/* Content Body */}
-        <div className="p-8 flex-1 max-w-7xl w-full mx-auto space-y-8">
+        <div className="p-4 md:p-8 flex-1 max-w-7xl w-full mx-auto space-y-6 md:space-y-8">
           
           {/* Stats Bar */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center gap-4">
               <div className="bg-orange-500/10 p-3 rounded-xl border border-orange-500/20">
                 <Users className="text-orange-500" size={24} />

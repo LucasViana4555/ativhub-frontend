@@ -66,25 +66,25 @@ export default function TeacherLandingPage() {
 
       {/* Header */}
       <header className="relative z-50 border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center gap-2">
-              <Gamepad2 className="w-8 h-8 text-neon-green" />
-              <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text mb-2 inline-block">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <Gamepad2 className="w-6 h-6 sm:w-8 sm:h-8 text-neon-green" />
+              <div className="text-xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text mb-1 sm:mb-2 inline-block">
                 AtivHub
               </div>
             </div>
-            <span className="text-xs bg-slate-800 text-slate-300 font-bold px-2.5 py-0.5 rounded-full border border-slate-700">
+            <span className="text-[10px] sm:text-xs bg-slate-800 text-slate-300 font-bold px-2 py-0.5 rounded-full border border-slate-700">
               Professores
             </span>
           </Link>
 
-          <div className="flex items-center gap-6">
-            <Link href="/auth/professor/login" className="text-sm font-semibold text-slate-300 hover:text-white transition-colors">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <Link href="/auth/professor/login" className="text-xs sm:text-sm font-semibold text-slate-300 hover:text-white transition-colors whitespace-nowrap">
               Entrar no Painel
             </Link>
-            <Link href="/auth/professor/register">
-              <button className="bg-gradient-to-r from-purple-600 to-orange-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all flex items-center gap-2 group">
+            <Link href="/auth/professor/register" className="hidden sm:block">
+              <button className="bg-gradient-to-r from-purple-600 to-orange-600 text-white font-bold text-sm px-5 py-2.5 rounded-xl hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all flex items-center gap-2 group whitespace-nowrap">
                 Criar Conta Gratuita
                 <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </button>
@@ -260,7 +260,7 @@ export default function TeacherLandingPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {/* Teacher Hero (Individual) */}
           <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-8 flex flex-col justify-between hover:border-slate-700 transition-colors">
             <div>

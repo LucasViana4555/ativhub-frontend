@@ -51,6 +51,14 @@ export default function ProfilePage() {
 
   if (!user) return null;
 
+  const handleBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push(user.role === "PROFESSOR" ? "/dashboard/teacher" : "/dashboard");
+    }
+  };
+
   return (
     <main className="min-h-screen relative overflow-hidden flex items-center justify-center p-4">
       {/* Background Decor */}
@@ -59,13 +67,13 @@ export default function ProfilePage() {
 
       {/* Top Navbar Simple for Navigation */}
       <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-50">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/")}>
+        <div className="flex items-center gap-2 cursor-pointer" onClick={handleBack}>
           <Gamepad2 className="w-6 h-6 text-neon-green" />
           <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-purple-500 glow-text">
             AtivHub
           </div>
         </div>
-        <button onClick={() => router.push("/")} className="text-slate-300 hover:text-white transition-colors font-semibold flex items-center gap-2">
+        <button onClick={handleBack} className="text-slate-300 hover:text-white transition-colors font-semibold flex items-center gap-2">
           <ArrowLeft size={18} /> Voltar
         </button>
       </div>

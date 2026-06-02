@@ -51,12 +51,12 @@ footer {
   transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-body:has(.sidebar-teacher) footer {
-  margin-left: 16rem !important; /* Matches teacher sidebar width (w-64 = 256px) */
-  width: calc(100% - 16rem) !important;
-}
-
 @media (min-width: 768px) {
+  body:has(.sidebar-teacher) footer {
+    margin-left: 16rem !important; /* Matches teacher sidebar width (w-64 = 256px) */
+    width: calc(100% - 16rem) !important;
+  }
+
   body:has(.sidebar-student) footer {
     margin-left: 18rem !important; /* Matches student sidebar width (w-72 = 288px) */
     width: calc(100% - 18rem) !important;
