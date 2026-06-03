@@ -40,7 +40,7 @@ export function ClassroomSidebar() {
     if (typeof window !== "undefined") {
       localStorage.removeItem("ativihub_token");
     }
-    router.push("/auth/login");
+    router.push("/");
   };
 
   const handleNavigate = (path: string) => {

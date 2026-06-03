@@ -51,7 +51,7 @@ function StudentDashboardWrapper({ children }: { children: React.ReactNode }) {
             <button 
               onClick={() => {
                 if (typeof window !== "undefined") localStorage.removeItem("ativihub_token");
-                window.location.href = "/auth/login";
+                window.location.href = "/";
               }} 
               className="text-red-400 hover:text-red-300 transition-colors font-semibold text-sm cursor-pointer"
             >

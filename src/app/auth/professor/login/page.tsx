@@ -63,7 +63,7 @@ export default function ProfessorLoginPage() {
   };
 
   return (
-    <main className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden bg-slate-950">
+    <main className="min-h-screen relative flex flex-col items-center justify-center pt-24 pb-12 px-4 overflow-y-auto bg-slate-950">
       {/* Background Decorativo */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-orange-600/5 blur-[120px]" />
@@ -82,7 +82,7 @@ export default function ProfessorLoginPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-slate-900 border border-slate-800 p-8 rounded-3xl w-full max-w-md relative z-10 shadow-2xl"
+        className="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-3xl w-full max-w-md relative z-10 shadow-2xl"
       >
         <div className="text-center mb-8">
           <div className="flex flex-col items-center justify-center mb-2">

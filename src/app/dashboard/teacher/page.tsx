@@ -340,7 +340,7 @@ export default function TeacherDashboard() {
 
   const handleLogout = () => {
     removeAuthToken();
-    router.push("/auth/professor/login");
+    router.push("/professor");
   };
 
   if (loading || !user) {

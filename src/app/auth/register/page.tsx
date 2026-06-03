@@ -40,7 +40,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden">
+    <main className="min-h-screen relative flex flex-col items-center justify-center pt-24 pb-12 px-4 overflow-y-auto">
       {/* Background Animado */}
       <AuthBackground />
 
@@ -56,7 +56,7 @@ export default function RegisterPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-panel p-8 rounded-3xl w-full max-w-md relative z-10"
+        className="glass-panel p-6 sm:p-8 rounded-3xl w-full max-w-md relative z-10"
       >
         <div className="text-center mb-8">
           <div className="flex flex-col items-center justify-center mb-2">
