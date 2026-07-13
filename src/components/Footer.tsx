@@ -21,7 +21,7 @@ export function Footer() {
       transition={{ duration: 0.8 }}
       className="relative z-10 border-t border-white/10 bg-black/80 pt-16 pb-8 backdrop-blur-lg overflow-hidden mt-auto"
     >
-      {/* Animated grid background just for footer */}
+      {/* grid animada no bg do footer */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
       
       <div className="container mx-auto px-6 relative z-10">

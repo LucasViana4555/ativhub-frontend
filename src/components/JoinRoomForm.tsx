@@ -27,8 +27,6 @@ export function JoinRoomForm({
     setError("");
 
     try {
-      // Small artificial delay to show standard gaming transition
-      await new Promise((resolve) => setTimeout(resolve, 800));
       await joinRoom(roomCode);
     } catch (err: any) {
       setError(err.message || "Erro ao entrar na sala. Tente novamente.");

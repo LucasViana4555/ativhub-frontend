@@ -14,7 +14,7 @@ export function ActivityList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   
-  // Submission Form State
+  // state do form de envio
   const [answeringActId, setAnsweringActId] = useState<string | null>(null);
   const [answerText, setAnswerText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,7 +32,7 @@ export function ActivityList() {
       setLoading(true);
       setError("");
       try {
-        // Query param compatibility: pass classroomId, classroomCode, and roomCode to handle any backend design
+        // query params pra compatibilidade c/ o back
         const queryParams = new URLSearchParams({
           classroomId: activeClassroomId,
           classroomCode: activeRoom?.code || "",
@@ -107,7 +107,7 @@ export function ActivityList() {
         body: JSON.stringify({ answer: answerText })
       });
       
-      // Update local submissions list
+      // att lista local de submissoes
       const newSubmission = {
         activityId: answeringActId,
         activityTitle: activities.find(a => a.id === answeringActId)?.title,
@@ -197,7 +197,7 @@ export function ActivityList() {
               }`}
             >
               <div>
-                {/* XP Reward Badge */}
+                {/* badge de xp */}
                 <div className={`absolute top-0 right-0 px-3 py-1 rounded-bl-xl font-black text-xs shadow-md uppercase tracking-wider ${
                   submitted 
                     ? "bg-slate-800 text-slate-400 border-l border-b border-slate-700" 
@@ -245,7 +245,7 @@ export function ActivityList() {
         })}
       </motion.div>
 
-      {/* Answer Submission Modal */}
+      {/* modal de envio de resposta */}
       <AnimatePresence>
         {answeringActId && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

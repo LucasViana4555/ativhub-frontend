@@ -27,7 +27,7 @@ export default function TeacherLandingPage() {
   useEffect(() => {
     const token = getAuthToken();
     if (token) {
-      // Se já estiver logado, redireciona temporariamente
+      // se ja tiver logado da redirect
       import("@/lib/api").then(({ fetchApi }) => {
         fetchApi("/users/me")
           .then((user) => {
@@ -59,7 +59,7 @@ export default function TeacherLandingPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-orange-500 selection:text-white font-sans overflow-x-hidden">
       
-      {/* Background Gradients */}
+      {/* gradientes do bg */}
       <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-purple-900/10 via-transparent to-transparent pointer-events-none" />
       <div className="absolute top-20 right-[-10%] w-[500px] h-[500px] bg-orange-600/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '6s' }} />
       <div className="absolute top-[40%] left-[-10%] w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[120px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
@@ -124,7 +124,7 @@ export default function TeacherLandingPage() {
           </div>
         </div>
 
-        {/* Dashboard Preview Mockup */}
+        {/* preview do dash */}
         <div className="lg:col-span-5 relative">
           <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 to-orange-500/10 rounded-3xl blur-2xl" />
           
@@ -134,7 +134,7 @@ export default function TeacherLandingPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-2xl backdrop-blur-md"
           >
-            {/* Mockup Header */}
+            {/* header do mockup */}
             <div className="flex items-center justify-between border-b border-slate-800/80 pb-4 mb-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
@@ -150,7 +150,7 @@ export default function TeacherLandingPage() {
               </span>
             </div>
 
-            {/* Mockup Stats */}
+            {/* stats do mockup */}
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="bg-slate-950/60 border border-slate-800/80 p-4 rounded-xl">
                 <span className="text-xs text-slate-500 uppercase tracking-wider block mb-1">Total de Alunos</span>
@@ -162,7 +162,7 @@ export default function TeacherLandingPage() {
               </div>
             </div>
 
-            {/* Mockup List */}
+            {/* lista do mockup */}
             <div className="space-y-3">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Últimas Missões Criadas</div>
               <div className="bg-slate-950/40 border border-slate-800/60 p-3 rounded-lg flex items-center justify-between">
@@ -197,7 +197,7 @@ export default function TeacherLandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
+            {/* card 1 */}
             <div className="bg-slate-900/50 border border-slate-800/80 p-8 rounded-3xl relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300">
               <div className="w-12 h-12 bg-purple-500/10 border border-purple-500/30 rounded-2xl flex items-center justify-center mb-6">
                 <Users className="text-purple-400" size={24} />
@@ -208,7 +208,7 @@ export default function TeacherLandingPage() {
               </p>
             </div>
 
-            {/* Card 2 */}
+            {/* card 2 */}
             <div className="bg-slate-900/50 border border-slate-800/80 p-8 rounded-3xl relative overflow-hidden group hover:border-orange-500/50 transition-all duration-300">
               <div className="w-12 h-12 bg-orange-500/10 border border-orange-500/30 rounded-2xl flex items-center justify-center mb-6">
                 <BookOpen className="text-orange-400" size={24} />
@@ -219,7 +219,7 @@ export default function TeacherLandingPage() {
               </p>
             </div>
 
-            {/* Card 3 */}
+            {/* card 3 */}
             <div className="bg-slate-900/50 border border-slate-800/80 p-8 rounded-3xl relative overflow-hidden group hover:border-purple-500/50 transition-all duration-300">
               <div className="w-12 h-12 bg-purple-500/10 border border-purple-500/30 rounded-2xl flex items-center justify-center mb-6">
                 <BarChart3 className="text-purple-400" size={24} />
@@ -243,7 +243,7 @@ export default function TeacherLandingPage() {
             Expanda a gamificação para toda a sua escola ou rede municipal de ensino conforme a sua necessidade.
           </p>
 
-          {/* Plano Free inicial Callout */}
+          {/* aviso do plano free */}
           <div className="mt-8 max-w-2xl mx-auto bg-slate-900/60 border border-orange-500/20 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
             <div>
               <span className="text-xs bg-orange-500/10 text-orange-400 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border border-orange-500/20">
@@ -261,7 +261,7 @@ export default function TeacherLandingPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {/* Teacher Hero (Individual) */}
+          {/* plano individual */}
           <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-8 flex flex-col justify-between hover:border-slate-700 transition-colors">
             <div>
               <span className="text-xs bg-slate-800 text-slate-300 font-bold px-3 py-1 rounded-full uppercase tracking-wider">
@@ -303,7 +303,7 @@ export default function TeacherLandingPage() {
             </Link>
           </div>
 
-          {/* Plano Escola (Premium) */}
+          {/* plano escola */}
           <div className="bg-slate-900 border-2 border-purple-500 rounded-3xl p-8 flex flex-col justify-between shadow-[0_0_30px_rgba(139,92,246,0.15)] relative transform lg:-translate-y-2">
             <div className="absolute top-0 right-8 -translate-y-1/2 bg-gradient-to-r from-purple-600 to-orange-500 text-white font-bold text-xs uppercase tracking-wider px-4 py-1.5 rounded-full shadow-lg">
               Mais Vendido
@@ -353,7 +353,7 @@ export default function TeacherLandingPage() {
             </Link>
           </div>
 
-          {/* Plano Rede (Enterprise) */}
+          {/* plano rede */}
           <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-8 flex flex-col justify-between hover:border-slate-700 transition-colors">
             <div>
               <span className="text-xs bg-slate-800 text-slate-300 font-bold px-3 py-1 rounded-full uppercase tracking-wider">

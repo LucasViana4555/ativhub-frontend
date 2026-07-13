@@ -15,9 +15,9 @@ function OAuth2CallbackContent() {
   const [tempToken, setTempToken] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [role, setRole] = useState("STUDENT"); // "STUDENT" ou "PROFESSOR"
+  const [role, setRole] = useState("STUDENT"); // student ou professor
   
-  // Fields for completion
+  // campos pra completar
   const [schoolName, setSchoolName] = useState("");
   const [subject, setSubject] = useState("");
   const [roomCode, setRoomCode] = useState("");
@@ -30,7 +30,7 @@ function OAuth2CallbackContent() {
     const nameParam = searchParams.get("name") || "";
 
     if (token) {
-      // Usuário existente: login direto
+      // user q ja existe: login direto
       setAuthToken(token);
       fetchApi("/users/me")
         .then((user) => {
@@ -46,7 +46,7 @@ function OAuth2CallbackContent() {
           setLoading(false);
         });
     } else if (tempTok) {
-      // Novo usuário: precisa completar dados
+      // novo user: precisa completar dados
       setTempToken(tempTok);
       setEmail(mailParam);
       setName(nameParam);

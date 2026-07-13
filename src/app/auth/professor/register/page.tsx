@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { fetchApi } from "@/lib/api";
+import { fetchApi, setAuthToken } from "@/lib/api";
 import Link from "next/link";
 import { UserPlus, Eye, EyeOff, Briefcase, School, BookOpen, Gamepad2 } from "lucide-react";
 import { AuthBackground } from "@/components/AuthBackground";
@@ -25,8 +25,8 @@ export default function ProfessorRegisterPage() {
     setLoading(true);
 
     try {
-      // Envia os campos no padrão inglês e português para cobrir qualquer modelagem no backend
-      await fetchApi("/auth/register", {
+      // manda campos em en e pt pra nao quebrar no back
+      const data = await fetchApi("/auth/register", {
         method: "POST",
         requireAuth: false,
         body: JSON.stringify({ 
@@ -41,8 +41,12 @@ export default function ProfessorRegisterPage() {
         }),
       });
 
-      // Se registrou com sucesso, direciona para o login do professor
-      router.push("/auth/professor/login");
+      if (data && data.token) {
+        setAuthToken(data.token);
+      }
+
+      // se registrou vai pro verify do email
+      router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
     } catch (err: any) {
       setError(err.message || "Erro ao criar conta de professor. Verifique os dados.");
     } finally {
@@ -52,13 +56,13 @@ export default function ProfessorRegisterPage() {
 
   return (
     <main className="min-h-screen relative flex flex-col items-center justify-center pt-24 pb-12 px-4 overflow-y-auto bg-slate-950">
-      {/* Background do Mestre (Sóbrio - Cinzas, Roxo e Laranja) */}
+      {/* bg sobrio pro mestre */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-orange-600/5 blur-[120px]" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-purple-600/5 blur-[120px]" />
       </div>
 
-      {/* Back Button */}
+      {/* botao voltar */}
       <button 
         onClick={() => router.push("/professor")}
         className="absolute top-6 left-6 text-slate-400 hover:text-white transition-colors flex items-center gap-2 font-semibold z-50 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-800/80 backdrop-blur-md hover:bg-slate-800"

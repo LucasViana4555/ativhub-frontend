@@ -15,11 +15,13 @@ Este repositório contém o **Frontend** da aplicação, desenvolvido com foco n
 ## 🚀 Funcionalidades Principais
 
 * **Interfaces Dinâmicas e Gamificadas:** Design premium e imersivo com micro-animações, feedback visual imediato e elementos de jogos aplicados à educação.
-* **Autenticação Integrada (JWT):** Sistema de login fluido que se integra perfeitamente com a API, preservando o estado e sessão de professores e alunos de forma segura.
+* **Autenticação Integrada (JWT) com Verificação de E-mail:** Sistema de login seguro integrado a um novo fluxo de verificação de e-mail por código de 6 dígitos (`/auth/verify`) com temporizador de reenvio de código.
+* **Perfil de Usuário Interativo:** Tela de perfil `/users/me` aprimorada, permitindo que usuários visualizem o status de verificação da conta, editem seus dados pessoais (nome, avatar/foto, escola/matéria) e façam a exclusão segura de sua conta.
 * **Painel do Professor:** Interfaces exclusivas para criação, edição e exclusão de missões educacionais, além de um fluxo otimizado para corrigir tarefas e enviar feedbacks.
 * **Dashboard do Aluno:** Central de estudos focada na visualização clara do progresso, com cards de missões interativos, exibição da barra de XP e nível atual.
-* **Ranking Global Interativo:** Placar de líderes com design atraente, motivando a competitividade saudável entre os usuários.
+* **Ranking Global Interativo:** Placar de líderes integrado ao microsserviço dedicado de gamificação, exibindo os melhores colocados na plataforma.
 * **Design Responsivo (Mobile-First):** Toda a plataforma foi construída para se adaptar perfeitamente desde telas de smartphones até monitores ultra-wide.
+* **Carregamento Otimizado:** Otimização no carregamento inicial da landing page (reduzido de 4s para 0.5s) e remoção de delays artificiais nas consultas para melhor fluidez.
 
 ---
 
@@ -51,14 +53,16 @@ ativhub/
 
 ---
 
-## 🔗 Integração com o Backend
+## 🔗 Integração com o Backend (Microsserviços)
 
-Este Frontend foi projetado especificamente para consumir o núcleo lógico do **AtivHub (Backend em Spring Boot)**.
+Este Frontend foi projetado especificamente para consumir a arquitetura de microsserviços do **AtivHub (APIs em Spring Boot)**.
 
-1.  **Comunicação Assíncrona:** Utiliza Fetch API nativa (ou axios) para integrar com todos os endpoints do Spring Boot.
-2.  **Tratamento de Tokens:** Após o sucesso no `/auth/login`, o JWT é guardado e os cabeçalhos são devidamente configurados com `Authorization: Bearer <token>` em rotas protegidas.
-3.  **Variáveis de Ambiente:** A URL base da API é referenciada via `.env.local` (`NEXT_PUBLIC_API_URL=http://localhost:8080`), permitindo que a troca entre ambientes (Dev, Prod) seja automática e indolor.
-4.  **Feedback Visual:** Erros do backend (como token inválido ou submissão recusada) são capturados e transformados em alertas visuais amigáveis para o usuário.
+1.  **Arquitetura de Microsserviços:** O front-end consome múltiplos serviços de forma transparente:
+    *   **Core Service (`http://localhost:8080`):** Responsável por autenticação, gerenciamento de salas de aula, atividades e submissões.
+    *   **Gamification Service (`http://localhost:8082`):** Responsável exclusivo pelo ranking de XP e evolução dos usuários.
+2.  **Roteamento Dinâmico de APIs:** A lógica interna do cliente redireciona requisições de `/users/ranking` automaticamente para o serviço de gamificação, enquanto as demais são enviadas ao Core Service.
+3.  **Tratamento de Tokens:** Após o login, o JWT recebido é armazenado e enviado nos cabeçalhos (`Authorization: Bearer <token>`) de todas as rotas protegidas de ambos os serviços.
+4.  **Variáveis de Ambiente:** Configuradas através do arquivo `.env.local`, mapeando os endpoints de cada serviço de forma independente.
 
 ---
 
@@ -68,15 +72,15 @@ Siga o passo a passo abaixo para rodar a aplicação React/Next.js na sua máqui
 
 ### 1. Pré-requisitos Obrigatórios
 * Ter o **Node.js** (versão 20 ou superior recomendada) instalado.
-* Ter o gerenciador de pacotes **npm** (incluso com Node) ou **yarn/pnpm**.
-* (Opcional, mas muito recomendado) Ter a **API Backend** iniciada na porta `8080`.
+* Ter o gerenciador de pacotes **npm** (incluso com Node).
+* Ter a infraestrutura de microsserviços (Core Service e Gamification Service) rodando localmente (pode ser via Docker Compose).
 
 ### 2. Clonar e Instalar Dependências
 Abra o seu terminal, navegue até a pasta de preferência e execute:
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/ativhub-frontend.git
+git clone https://github.com/LucasViana4555/ativhub-frontend.git
 cd ativhub-frontend
 
 # Instale todas as dependências mapeadas
@@ -84,10 +88,11 @@ npm install
 ```
 
 ### 3. Configurar as Variáveis de Ambiente
-Na raiz do projeto (na mesma pasta onde fica o `package.json`), crie um arquivo chamado `.env.local` e defina a URL da sua API local:
+Na raiz do projeto (na mesma pasta onde fica o `package.json`), crie um arquivo chamado `.env.local` e defina as URLs de cada microsserviço:
 
 ```properties
 NEXT_PUBLIC_API_URL=http://localhost:8080
+NEXT_PUBLIC_GAMIFICATION_URL=http://localhost:8082
 ```
 
 ### 4. Iniciar o Servidor de Desenvolvimento

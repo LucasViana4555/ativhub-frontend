@@ -42,12 +42,10 @@ export const fetchApi = async (endpoint: string, options: FetchOptions = {}) => 
     };
   }
 
-  // Artificial delay for GET requests to show off the gamified loading screen
-  if (!config.method || config.method.toUpperCase() === "GET") {
-    await new Promise(resolve => setTimeout(resolve, 3000));
-  }
+  const gamificationUrl = process.env.NEXT_PUBLIC_GAMIFICATION_URL || "http://localhost:8082";
+  const baseUrl = endpoint.startsWith("/users/ranking") ? gamificationUrl : API_URL;
 
-  const response = await fetch(`${API_URL}${endpoint}`, config);
+  const response = await fetch(`${baseUrl}${endpoint}`, config);
 
   if (!response.ok) {
     let errorMsg = `Request failed with status ${response.status}`;
@@ -63,7 +61,7 @@ export const fetchApi = async (endpoint: string, options: FetchOptions = {}) => 
     throw new Error(errorMsg);
   }
 
-  // Se a resposta for vazia (ex: 204 No Content ou 200 OK sem body)
+  // se resposta vazia (ex: 204 ou 200 sem body)
   const text = await response.text();
   if (!text) return null;
 

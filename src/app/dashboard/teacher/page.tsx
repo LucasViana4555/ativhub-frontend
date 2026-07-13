@@ -39,6 +39,7 @@ export interface UserData {
   subject?: string;
   escola?: string;
   disciplina?: string;
+  photoUrl?: string;
 }
 
 interface Classroom {
@@ -64,32 +65,32 @@ export default function TeacherDashboard() {
   const [selectedClassroomId, setSelectedClassroomId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Salas State
+  // state das salas
   const [classrooms, setClassrooms] = useState<Classroom[]>([]);
   const [isRoomModalOpen, setIsRoomModalOpen] = useState(false);
   const [newRoomName, setNewRoomName] = useState("");
   const [newRoomSubject, setNewRoomSubject] = useState("");
 
-  // Atividades State (ported from ProfessorDashboard)
+  // state das atividades
   const [activities, setActivities] = useState<any[]>([]);
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [evaluatingSubId, setEvaluatingSubId] = useState<string | null>(null);
 
-  // Form State
+  // state do form
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [xpReward, setXpReward] = useState<number>(10);
   const [isCreating, setIsCreating] = useState(false);
   const [editingActId, setEditingActId] = useState<string | null>(null);
 
-  // Submissions State
+  // state das submissoes
   const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
   const [activitySubmissions, setActivitySubmissions] = useState<any[]>([]);
   const [loadingSubmissions, setLoadingSubmissions] = useState(false);
 
-  // Eval State
+  // state de avaliacao
   const [feedback, setFeedback] = useState("");
   const [grade, setGrade] = useState<number>(100);
   const [approved, setApproved] = useState(true);
@@ -98,12 +99,12 @@ export default function TeacherDashboard() {
   const [createError, setCreateError] = useState("");
   const [evalError, setEvalError] = useState("");
 
-  // Relatórios/Ranking State
+  // state dos relatorios/ranking
   const [ranking, setRanking] = useState<any[]>([]);
   const [loadingRanking, setLoadingRanking] = useState(true);
   const [reportSearch, setReportSearch] = useState("");
 
-  // Load user data
+  // carrega dados do user
   useEffect(() => {
     const token = getAuthToken();
     if (!token) {
@@ -131,7 +132,7 @@ export default function TeacherDashboard() {
     loadUser();
   }, [router]);
 
-  // Load classrooms from backend
+  // carrega salas do back
   useEffect(() => {
     if (!user) return;
     const loadClassrooms = async () => {
@@ -146,7 +147,7 @@ export default function TeacherDashboard() {
     loadClassrooms();
   }, [user]);
 
-  // Load activities, submissions and ranking
+  // carrega atividades, submissoes e ranking
   const loadDashboardData = async () => {
     if (!user) return;
     setLoadingData(true);
@@ -351,13 +352,13 @@ export default function TeacherDashboard() {
     );
   }
 
-  // Mapeador de alunos para salas baseados no ranking
+  // mapeia alunos pras salas pelo ranking
   const getRoomForStudent = (student: any, index: number, rooms: Classroom[]) => {
-    // Se houver código da sala atribuído
+    // se tiver codigo de sala
     if (student.roomCode && rooms.some(c => c.code === student.roomCode)) {
       return student.roomCode;
     }
-    // Caso contrário, não mapeia o aluno para nenhuma sala do professor
+    // senao nao mapeia o aluno
     return "";
   };
 
@@ -372,10 +373,10 @@ export default function TeacherDashboard() {
     return Math.round(total / students.length);
   };
 
-  // Sala selecionada
+  // sala selecionada
   const selectedClassroom = classrooms.find(c => c.id === selectedClassroomId);
 
-  // Estatísticas calculadas dinamicamente
+  // stats calculadas de forma dinamica
   const activeRoomStudents = selectedClassroom 
     ? getFilteredStudentsForRoom(selectedClassroom.code) 
     : ranking.filter((student, index) => {
@@ -386,7 +387,7 @@ export default function TeacherDashboard() {
   const totalXP = activeRoomStudents.reduce((acc, item) => acc + (item.user?.xp || item.xp || 0), 0);
   const avgXP = activeRoomStudents.length > 0 ? Math.round(totalXP / activeRoomStudents.length) : 0;
 
-  // Submissões filtradas por sala se uma sala estiver selecionada
+  // submissoes filtradas se tiver sala selecionada
   const filteredSubmissions = selectedClassroom 
     ? submissions.filter(sub => {
         const studentEmail = sub.student?.email || sub.studentEmail || "";
@@ -398,14 +399,14 @@ export default function TeacherDashboard() {
 
   const pendingSubmissions = filteredSubmissions.filter(s => s.grade === null || s.grade === undefined || s.status === 'PENDING' || s.feedback === null);
 
-  // Filtragem de ranking para os relatórios
+  // filtra ranking pros relatorios
   const filteredRanking = activeRoomStudents.filter(item => {
     const name = (item.user?.name || item.name || "").toLowerCase();
     const email = (item.user?.email || item.email || "").toLowerCase();
     return name.includes(reportSearch.toLowerCase()) || email.includes(reportSearch.toLowerCase());
   });
 
-  // Auxiliares de renderização para o seletor de salas
+  // helpers de render pro seletor de salas
   const renderSelectedRoomBanner = () => {
     if (!selectedClassroom) return null;
     return (
@@ -501,7 +502,7 @@ export default function TeacherDashboard() {
     );
   };
 
-  // Conteúdo compartilhado da barra lateral
+  // conteudo da sidebar
   const sidebarContent = (
     <div className="flex flex-col h-full justify-between p-6 bg-slate-900">
       <div className="space-y-8 flex-1 flex flex-col">
@@ -557,16 +558,20 @@ export default function TeacherDashboard() {
 
       {/* Perfil & Logout */}
       <div className="border-t border-slate-850 pt-6 space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 overflow-hidden shrink-0">
+        <div 
+          onClick={() => router.push("/users/me")}
+          className="flex items-center gap-3 cursor-pointer hover:bg-slate-800/50 p-2 -mx-2 rounded-xl transition-all group"
+          title="Ver Perfil / Configurações"
+        >
+          <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 group-hover:border-purple-500 overflow-hidden shrink-0 transition-colors">
             <img 
-              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}&backgroundColor=1E293B`} 
+              src={user.photoUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}&backgroundColor=1E293B`} 
               alt="Avatar" 
               className="w-full h-full object-cover"
             />
           </div>
           <div className="min-w-0">
-            <h4 className="text-xs font-bold text-white truncate">{user.name}</h4>
+            <h4 className="text-xs font-bold text-white group-hover:text-purple-400 truncate transition-colors">{user.name}</h4>
             <p className="text-[10px] text-slate-500 truncate">{user.disciplina || user.subject || "Professor"}</p>
           </div>
         </div>
@@ -946,7 +951,7 @@ export default function TeacherDashboard() {
                         );
                       })()
                     ) : (
-                      // Visão geral das pendentes de todas as atividades
+                      // geral de pendentes de tds as ativs
                       pendingSubmissions.length === 0 ? (
                         <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center border-dashed">
                           <CheckCircle className="mx-auto text-slate-600 mb-3" size={36} />

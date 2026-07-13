@@ -39,7 +39,7 @@ export default function LoginPage() {
       if (data && data.token) {
         setAuthToken(data.token);
         
-        // Fetch user data to redirect based on role
+        // busca os dados do user pra redirect baseado no role
         try {
           const user = await fetchApi("/users/me");
           if (user.role === "ALUNO") {
@@ -64,10 +64,10 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen relative flex flex-col items-center justify-center pt-24 pb-12 px-4 overflow-y-auto">
-      {/* Background Animado */}
+      {/* bg animado */}
       <AuthBackground />
 
-      {/* Back Button */}
+      {/* botao voltar */}
       <button 
         onClick={() => router.push("/")}
         className="absolute top-6 left-6 text-slate-400 hover:text-white transition-colors flex items-center gap-2 font-semibold z-50 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-700/50 backdrop-blur-md hover:bg-slate-800"

@@ -45,7 +45,7 @@ function LoadingScreen() {
       </motion.div>
 
       <div className="w-64 flex flex-col items-center gap-4">
-        {/* Loading Bar Container */}
+        {/* barra de loading */}
         <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden relative">
           <motion.div
             initial={{ width: "0%" }}
@@ -55,7 +55,7 @@ function LoadingScreen() {
           />
         </div>
 
-        {/* Loading com frase */}
+        {/* loading c/ frase */}
         <motion.div
           key={phraseIndex}
           initial={{ opacity: 0, y: 5 }}
@@ -74,18 +74,17 @@ export default function LandingPage() {
   const router = useRouter();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  // Parallax scroll 
+  // scroll parallax 
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
   const y2 = useTransform(scrollY, [0, 1000], [0, -150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   useEffect(() => {
-    // redirecionamento inteligente
+    // redirect inteligente
     const token = typeof window !== "undefined" ? localStorage.getItem("ativihub_token") : null;
 
-
-    const MIN_LOADING_TIME = 4000;
+    const MIN_LOADING_TIME = 500;
     const startTime = Date.now();
 
     const handleCompletion = (callback: () => void) => {
@@ -114,7 +113,7 @@ export default function LandingPage() {
     return <LoadingScreen />;
   }
 
-  // variação de animação
+  // variacoes de animacao
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -148,7 +147,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#0B0C10] text-white selection:bg-neon-green selection:text-black overflow-x-hidden font-sans">
 
-      {/* efeitos do background */}
+      {/* efeitos do bg */}
       <motion.div
         animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -160,7 +159,7 @@ export default function LandingPage() {
         className="fixed bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-neon-green/20 blur-[120px] pointer-events-none"
       />
 
-      {/* elemento animados do background */}
+      {/* itens animados do bg */}
       <motion.div style={{ y: y1 }} className="absolute top-[20%] left-[5%] opacity-30 hidden lg:block" variants={floatingVariants} animate="animate">
         <Star size={48} className="text-yellow-400" />
       </motion.div>
@@ -205,7 +204,7 @@ export default function LandingPage() {
         </motion.div>
       </motion.header>
 
-      {/* seção principal */}
+      {/* sec principal */}
       <main className="relative z-10 container mx-auto px-6 pt-24 pb-32 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -255,7 +254,7 @@ export default function LandingPage() {
               whileTap={{ scale: 0.95 }}
               className="px-10 py-5 rounded-2xl font-black text-xl bg-gradient-to-r from-neon-green to-purple-500 text-white hover:shadow-[0_0_40px_rgba(139,92,246,0.6)] transition-all duration-300 flex items-center justify-center gap-3 w-full sm:w-auto relative overflow-hidden group"
             >
-              {/* efeito shine */}
+              {/* efeito de brilho */}
               <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12" />
               Dar o Play <Gamepad2 size={28} className="group-hover:rotate-12 transition-transform" />
             </motion.button>
@@ -273,7 +272,7 @@ export default function LandingPage() {
         </motion.div>
       </main>
 
-      {/* seção que mostra as features */}
+      {/* sec das features */}
       <section className="relative z-10 container mx-auto px-6 py-32 bg-black/40 border-t border-white/5 rounded-t-[3rem]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -292,7 +291,7 @@ export default function LandingPage() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {/* Card 1 */}
+          {/* card 1 */}
           <motion.div
             variants={itemVariants}
             whileHover={{ y: -15, scale: 1.02 }}
@@ -312,7 +311,7 @@ export default function LandingPage() {
             </p>
           </motion.div>
 
-          {/* Card 2 */}
+          {/* card 2 */}
           <motion.div
             variants={itemVariants}
             whileHover={{ y: -15, scale: 1.02 }}
@@ -332,7 +331,7 @@ export default function LandingPage() {
             </p>
           </motion.div>
 
-          {/* Card 3 */}
+          {/* card 3 */}
           <motion.div
             variants={itemVariants}
             whileHover={{ y: -15, scale: 1.02 }}
@@ -354,7 +353,7 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* banner de ação */}
+      {/* banner de acao */}
       <motion.section
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -379,7 +378,7 @@ export default function LandingPage() {
 
 
 
-      {/* pro efeito shine funcionar */}
+      {/* pra funcionar o brilho */}
       <style dangerouslySetInnerHTML={{
         __html: `
         @keyframes shimmer {

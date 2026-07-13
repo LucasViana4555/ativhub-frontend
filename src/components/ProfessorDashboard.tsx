@@ -15,19 +15,19 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [evaluatingSubId, setEvaluatingSubId] = useState<string | null>(null);
 
-  // Form State
+  // state do form
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [xpReward, setXpReward] = useState<number>(10);
   const [isCreating, setIsCreating] = useState(false);
   const [editingActId, setEditingActId] = useState<string | null>(null);
 
-  // Submissions State
+  // state de submissoes
   const [selectedActivityId, setSelectedActivityId] = useState<string | null>(null);
   const [activitySubmissions, setActivitySubmissions] = useState<any[]>([]);
   const [loadingSubmissions, setLoadingSubmissions] = useState(false);
 
-  // Eval State
+  // state de avaliacao
   const [feedback, setFeedback] = useState("");
   const [grade, setGrade] = useState<number>(100);
   const [approved, setApproved] = useState(true);
@@ -48,7 +48,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
         console.error("Erro atividades:", err);
       }
 
-      // Fetch submissions for all activities to get the real global pending count
+      // busca submissoes de todas as atividades
       if (acts.length > 0) {
         try {
           const subsPromises = acts.map(act => fetchApi(`/activities/${act.id}/submissions`).catch(() => []));
@@ -141,7 +141,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
       setXpReward(10);
       setIsModalOpen(false);
       setEditingActId(null);
-      loadDashboardData(); // Refetch
+      loadDashboardData(); // refetch
     } catch (err: any) {
       console.error("Erro ao salvar atividade", err);
       setCreateError(err.message || "Erro ao conectar com a API.");
@@ -165,7 +165,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
       setFeedback("");
       setGrade(100);
       setApproved(true);
-      loadDashboardData(); // Refetch
+      loadDashboardData(); // refetch
     } catch (err: any) {
       console.error("Erro ao avaliar", err);
       setEvalError(err.message || "Erro ao avaliar submissão.");
@@ -232,7 +232,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Left Col: Activities */}
+        {/* coluna da esquerda: atividades */}
         <div>
           <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
             <BookOpen className="text-purple-500" /> Suas Atividades
@@ -273,7 +273,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
           </div>
         </div>
 
-        {/* Right Col: Submissions */}
+        {/* coluna da direita: submissoes */}
         <div>
           <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
             <Clock className="text-neon-green" /> {selectedActivityId ? "Submissões da Atividade" : "Pendentes (Visão Geral)"}
@@ -327,7 +327,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
                 })
               )
             ) : (
-              // Visão Geral
+              // visao geral
               pendingSubmissions.length === 0 ? (
                 <div className="glass-panel p-8 rounded-2xl text-center border-dashed border-2 border-slate-700">
                   <CheckCircle className="mx-auto text-slate-500 mb-4" size={48} />
@@ -365,7 +365,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
         </div>
       </div>
 
-      {/* Create/Edit Activity Modal */}
+      {/* modal de criar/editar atividade */}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -447,7 +447,7 @@ export function ProfessorDashboard({ user }: { user: UserData }) {
         )}
       </AnimatePresence>
 
-      {/* Evaluate Submission Drawer/Modal */}
+      {/* modal de avaliar submissao */}
       <AnimatePresence>
         {evaluatingSubId && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

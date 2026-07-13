@@ -50,7 +50,7 @@ export function ClassroomSidebar() {
 
   const sidebarContent = (
     <div className="flex flex-col h-full bg-slate-950/80 backdrop-blur-xl border-r border-slate-900 text-slate-300 p-6">
-      {/* Brand Header */}
+      {/* header da marca */}
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-900">
         <div 
           onClick={() => handleNavigate("/")}
@@ -69,7 +69,7 @@ export function ClassroomSidebar() {
         </button>
       </div>
 
-      {/* Selected Classroom Details */}
+      {/* detalhes da sala selecionada */}
       {activeRoom ? (
         <div className="mb-8 p-4 bg-purple-950/20 border border-purple-500/20 rounded-2xl glow-purple relative overflow-hidden">
           <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-full blur-xl pointer-events-none" />
@@ -86,7 +86,7 @@ export function ClassroomSidebar() {
         </div>
       )}
 
-      {/* Main Navigation */}
+      {/* navegação principal */}
       <div className="space-y-1.5 mb-8">
         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider px-3 mb-2">Navegação</p>
         {navItems.map((item) => {
@@ -109,7 +109,7 @@ export function ClassroomSidebar() {
         })}
       </div>
 
-      {/* Classroom Selector List */}
+      {/* lista de salas */}
       <div className="flex-1 overflow-y-auto space-y-4 pr-1 scrollbar-thin">
         <div className="flex items-center justify-between px-3">
           <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Minhas Salas</p>
@@ -148,7 +148,7 @@ export function ClassroomSidebar() {
         </div>
       </div>
 
-      {/* User Actions Profile & Logout */}
+      {/* perfil e logout */}
       <div className="mt-auto pt-6 border-t border-slate-900 space-y-2">
         <button
           onClick={() => handleNavigate("/users/me")}
@@ -158,7 +158,15 @@ export function ClassroomSidebar() {
               : "hover:bg-slate-900 text-slate-400 hover:text-white"
           }`}
         >
-          <User size={18} />
+          {student.photoUrl ? (
+            <div className="w-5 h-5 rounded-full overflow-hidden border border-slate-700 shrink-0 shadow-[0_0_10px_rgba(168,85,247,0.2)]">
+              <img src={student.photoUrl} alt="Avatar" className="w-full h-full object-cover" />
+            </div>
+          ) : (
+            <div className="w-5 h-5 rounded-full overflow-hidden border border-slate-800 shrink-0">
+              <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${student.email}&backgroundColor=1E293B`} alt="Avatar" className="w-full h-full object-cover" />
+            </div>
+          )}
           Meu Perfil
         </button>
         <button
@@ -174,7 +182,7 @@ export function ClassroomSidebar() {
 
   return (
     <>
-      {/* Mobile Header Top Navbar */}
+      {/* nav do topo mobile */}
       <div className="md:hidden fixed top-0 left-0 w-full bg-slate-950/80 backdrop-blur-md border-b border-slate-900 p-4 flex justify-between items-center z-40">
         <div className="flex items-center gap-3">
           <button 
@@ -198,18 +206,18 @@ export function ClassroomSidebar() {
         )}
       </div>
 
-      {/* Desktop Sidebar (Permanent) */}
+      {/* sidebar desktop fixa */}
       <div className="hidden md:block w-72 h-screen shrink-0 sticky top-0 sidebar-student-container">
         <div className="h-full sidebar-student">
           {sidebarContent}
         </div>
       </div>
 
-      {/* Mobile Drawer (Slide-out) */}
+      {/* drawer mobile lateral */}
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-0 z-50 md:hidden flex">
-            {/* Overlay */}
+            {/* overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -217,7 +225,7 @@ export function ClassroomSidebar() {
               onClick={() => setIsOpen(false)}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             />
-            {/* Drawer */}
+            {/* drawer */}
             <motion.div
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
@@ -231,7 +239,7 @@ export function ClassroomSidebar() {
         )}
       </AnimatePresence>
 
-      {/* Join Room Modal */}
+      {/* modal de entrar na sala */}
       <AnimatePresence>
         {isJoinModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

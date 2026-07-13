@@ -9,6 +9,8 @@ export interface UserData {
   email: string;
   role: string;
   xp?: number;
+  schoolName?: string;
+  photoUrl?: string;
 }
 
 export interface StudentClassroom {
@@ -35,17 +37,17 @@ export const DEFAULT_CLASSROOMS: StudentClassroom[] = [
   { id: "3", name: "Ensino Médio - 3º A", subject: "Física", code: "FIS-3A" },
 ];
 
-// Helper to find a classroom by its code, checking defaults and all local classrooms created by teachers
+// helper pra achar sala pelo codigo, olhando padroes e locais
 export const findClassroomByCode = (code: string): StudentClassroom | null => {
   const normalizedCode = code.trim().toUpperCase();
   
-  // 1. Check default rooms
+  // 1. olha as salas default
   const foundDefault = DEFAULT_CLASSROOMS.find(
     (c) => c.code.toUpperCase() === normalizedCode
   );
   if (foundDefault) return foundDefault;
 
-  // 2. Check local storage for any teacher rooms (simulating a database/global registry in dev)
+  // 2. olha localstorage pra ver se tem salas de prof
   if (typeof window !== "undefined") {
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
@@ -99,7 +101,7 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         return;
       }
 
-      // Load classrooms from localStorage or user classrooms if the API provides it
+      // carrega salas do localstorage ou do user se o back mandar
       const storedRoomsKey = `ativhub_student_classrooms_${userData.id}`;
       const localRoomsRaw = localStorage.getItem(storedRoomsKey);
       const localClassrooms = localRoomsRaw ? JSON.parse(localRoomsRaw) : [];
@@ -111,7 +113,7 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
         classrooms,
       });
 
-      // Load persistent active room or default to first classroom
+      // carrega sala ativa do local ou bota a primeira
       const savedActiveRoom = localStorage.getItem(`ativhub_active_room_${userData.id}`);
       if (savedActiveRoom && classrooms.some((c: StudentClassroom) => c.id === savedActiveRoom)) {
         setActiveClassroomIdState(savedActiveRoom);
@@ -142,13 +144,13 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
     const normalizedCode = roomCode.trim().toUpperCase();
 
-    // 1. Call the API backend to join the classroom
+    // 1. chama o back pra entrar na sala
     await fetchApi("/classrooms/join", {
       method: "POST",
       body: JSON.stringify({ code: normalizedCode }),
     });
 
-    // 2. Reload student data from backend to get updated classrooms
+    // 2. recarrega dados do aluno do back
     const userData = await fetchApi("/users/me");
     if (userData.role !== "ALUNO") {
       throw new Error("Usuário inválido.");
@@ -161,7 +163,7 @@ export const StudentProvider: React.FC<{ children: React.ReactNode }> = ({ child
       classrooms,
     });
 
-    // 3. Find the newly joined room and set it as active
+    // 3. acha a sala q acabou de entrar e ativa
     const joinedRoom = classrooms.find(
       (c: StudentClassroom) => c.code.toUpperCase() === normalizedCode
     );

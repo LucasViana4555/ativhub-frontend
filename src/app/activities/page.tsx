@@ -60,13 +60,13 @@ export default function ActivitiesPage() {
 
   const hasSubmitted = (act: any) => {
     return submissions.some(s => {
-      // Tenta cruzar pelo ID da atividade se o backend devolver
+      // cruza pelo id se o back retornar
       const sActId = s.activityId ?? s.activity?.id;
       if (sActId !== undefined && sActId !== null && String(sActId) === String(act.id)) {
         return true;
       }
       
-      // Fallback: Tenta cruzar pelo título da atividade caso o backend devolva apenas o activityTitle no DTO flat
+      // fallback: cruza pelo titulo se o back retornar so o activitytitle no dto flat
       const sActTitle = s.activityTitle ?? s.activity?.title;
       if (sActTitle && sActTitle === act.title) {
         return true;
@@ -89,7 +89,7 @@ export default function ActivitiesPage() {
         body: JSON.stringify({ answer: answerText })
       });
       
-      // Atualiza localmente ou refetch
+      // att local ou refetch
       setSubmissions(prev => [...prev, { activityId: answeringActId, feedback: null, grade: null }]);
       setAnsweringActId(null);
       setAnswerText("");
@@ -102,11 +102,11 @@ export default function ActivitiesPage() {
 
   return (
     <main className="min-h-screen relative overflow-hidden pt-24 pb-12 px-4">
-      {/* Background Decor */}
+      {/* decoracao do bg */}
       <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-purple-900/50 to-transparent pointer-events-none" />
       <div className="absolute top-[20%] -left-[100px] w-[400px] h-[400px] bg-neon-green/5 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Top Navbar Simple for Navigation */}
+      {/* nav simples pra navegar */}
       <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-50">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/dashboard")}>
           <Gamepad2 className="w-6 h-6 text-neon-green" />
@@ -184,7 +184,7 @@ export default function ActivitiesPage() {
         )}
       </div>
 
-      {/* Answer Modal */}
+      {/* modal de resposta */}
       <AnimatePresence>
         {answeringActId && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

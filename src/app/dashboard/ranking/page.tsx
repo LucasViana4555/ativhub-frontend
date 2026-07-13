@@ -53,24 +53,24 @@ export default function DashboardRankingPage() {
         let rankingArray: RankingItem[] = [];
 
         if (isUuid(activeClassroomId)) {
-          // Real classroom (UUID): fetch directly from the backend
+          // sala de vdd (uuid): puxa direto do back
           const data = await fetchApi(`/users/ranking?classroomId=${activeClassroomId}`);
           rankingArray = Array.isArray(data) 
             ? data 
             : (data?.content || data?.data || []);
         } else {
-          // Default/mock classroom: fetch global ranking and simulate client-side filtering
+          // sala default/mock: puxa global e filtra no client
           const data = await fetchApi(`/users/ranking`);
           const allRanking: RankingItem[] = Array.isArray(data) 
             ? data 
             : (data?.content || data?.data || []);
           
-          // Filter by activeRoom code
+          // filtra pelo codigo da sala ativa
           rankingArray = allRanking.filter((item: RankingItem) => {
             return !!(item.roomCode && item.roomCode.toUpperCase() === activeRoom?.code.toUpperCase());
           });
 
-          // Fallback mock data if the mock room has no database students (to ensure visual excellence)
+          // fallback mock se a sala mock nao tiver alunos no banco
           if (rankingArray.length === 0) {
             rankingArray = [
               {
@@ -101,7 +101,7 @@ export default function DashboardRankingPage() {
           }
         }
 
-        // Re-assign local positions inside this classroom ranking
+        // recalcula as posicoes locais do ranking da sala
         const ordered = rankingArray
           .sort((a: RankingItem, b: RankingItem) => {
             const xpA = (a.user?.xp ?? a.xp ?? 0);
@@ -168,7 +168,7 @@ export default function DashboardRankingPage() {
               const avatarSeed = rUser.email || rUser.name || 'guest';
               const pos = item.localPos || (i + 1);
               
-              // Style variables for positions
+              // variaveis de estilo pras posicoes
               const isFirst = pos === 1;
               const isSecond = pos === 2;
               const isThird = pos === 3;

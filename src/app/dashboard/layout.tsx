@@ -24,16 +24,16 @@ function StudentDashboardWrapper({ children }: { children: React.ReactNode }) {
 
   const hasNoClassrooms = student.classrooms.length === 0;
 
-  // Se o aluno não tiver sala vinculada, exibe a tela de bloqueio com o JoinRoomForm centralizado
+  // se aluno sem sala mostra bloqueio c/ joinroomform no meio
   if (hasNoClassrooms) {
     return (
       <main className="min-h-screen relative overflow-hidden flex flex-col justify-between bg-slate-950">
-        {/* Background Decor */}
+        {/* decoracao bg */}
         <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-purple-900/40 to-transparent pointer-events-none" />
         <div className="absolute -top-[200px] -right-[200px] w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute top-[20%] -left-[100px] w-[400px] h-[400px] bg-neon-green/5 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Top Navbar */}
+        {/* nav do topo */}
         <div className="w-full p-6 flex justify-between items-center z-50">
           <div className="flex items-center gap-2">
             <Gamepad2 className="w-6 h-6 text-neon-green" />
@@ -60,7 +60,7 @@ function StudentDashboardWrapper({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Formulário Centralizado de Acesso */}
+        {/* form de acesso no meio */}
         <div className="flex-1 flex items-center justify-center p-4 z-10">
           <JoinRoomForm />
         </div>
@@ -69,12 +69,12 @@ function StudentDashboardWrapper({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // Se o aluno tiver sala vinculada, renderiza o layout com a ClassroomSidebar
+  // se aluno tem sala renderiza c/ classroomsidebar
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-slate-950">
       <ClassroomSidebar />
       <main className="flex-1 min-h-screen relative overflow-hidden pt-20 md:pt-0">
-        {/* Background Decor */}
+        {/* decoracao bg */}
         <div className="absolute top-0 left-0 w-full h-[300px] bg-gradient-to-b from-purple-900/10 to-transparent pointer-events-none" />
         <div className="absolute -top-[100px] -right-[100px] w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[100px] pointer-events-none" />
         
@@ -104,7 +104,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         const userData = await fetchApi("/users/me");
         setRole(userData.role);
         
-        // Se for professor acessando o painel geral do aluno, redireciona imediatamente
+        // se for prof no painel do aluno da redirect na hora
         if (userData.role === "PROFESSOR" && pathname === "/dashboard") {
           router.push("/dashboard/teacher");
         }
@@ -127,7 +127,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     );
   }
 
-  // Se for Professor, deixa renderizar diretamente (ele possui rotas e layouts específicos no painel dele)
+  // se for prof renderiza direto pq ele tem rotas proprias
   if (role === "PROFESSOR") {
     return <>{children}</>;
   }

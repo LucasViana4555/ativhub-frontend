@@ -38,7 +38,7 @@ export function GamifiedLoading({ text, className = "" }: { text?: string, class
       </motion.div>
 
       <div className="w-64 flex flex-col items-center gap-4">
-        {/* Loading Bar Container */}
+        {/* barra de loading */}
         <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden relative">
           <motion.div
             initial={{ width: "0%" }}

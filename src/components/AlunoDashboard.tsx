@@ -11,7 +11,7 @@ export function AlunoDashboard({ user }: { user: UserData }) {
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // States para editar
+  // states pra editar
   const [editingSubId, setEditingSubId] = useState<string | null>(null);
   const [editAnswerText, setEditAnswerText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -77,7 +77,7 @@ export function AlunoDashboard({ user }: { user: UserData }) {
 
   return (
     <div className="w-full max-w-4xl mx-auto pt-24 pb-12 px-4">
-      {/* Gamer Header */}
+      {/* header gamer */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -198,7 +198,7 @@ export function AlunoDashboard({ user }: { user: UserData }) {
         </div>
       </div>
 
-      {/* edit modal */}
+      {/* modal de edicao */}
       <AnimatePresence>
         {editingSubId && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

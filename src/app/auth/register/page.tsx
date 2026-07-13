@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { fetchApi } from "@/lib/api";
+import { fetchApi, setAuthToken } from "@/lib/api";
 import Link from "next/link";
 import { UserPlus, Eye, EyeOff, Gamepad2 } from "lucide-react";
 import { AuthBackground } from "@/components/AuthBackground";
@@ -24,14 +24,18 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      await fetchApi("/auth/register", {
+      const data = await fetchApi("/auth/register", {
         method: "POST",
         requireAuth: false,
         body: JSON.stringify({ name, email, password, role }),
       });
 
-      // Se registrou com sucesso, direciona para o login
-      router.push("/auth/login");
+      if (data && data.token) {
+        setAuthToken(data.token);
+      }
+
+      // se registrou vai pro verify do email
+      router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
     } catch (err: any) {
       setError(err.message || "Erro ao criar conta. Verifique os dados fornecidos.");
     } finally {
@@ -41,10 +45,10 @@ export default function RegisterPage() {
 
   return (
     <main className="min-h-screen relative flex flex-col items-center justify-center pt-24 pb-12 px-4 overflow-y-auto">
-      {/* Background Animado */}
+      {/* bg animado */}
       <AuthBackground />
 
-      {/* Back Button */}
+      {/* botao voltar */}
       <button 
         onClick={() => router.push("/")}
         className="absolute top-6 left-6 text-slate-400 hover:text-white transition-colors flex items-center gap-2 font-semibold z-50 bg-slate-900/50 px-4 py-2 rounded-full border border-slate-700/50 backdrop-blur-md hover:bg-slate-800"
