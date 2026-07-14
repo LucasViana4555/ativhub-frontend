@@ -19,7 +19,7 @@ export default function LoginPage() {
   const handleGoogleLogin = () => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("oauth_role", "STUDENT");
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://ativhub-backend.onrender.com";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://ativhub.chilecentral.cloudapp.azure.com";
       window.location.href = `${apiUrl}/oauth2/authorization/google`;
     }
   };

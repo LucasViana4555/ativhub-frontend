@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://ativhub-backend.onrender.com";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://ativhub.chilecentral.cloudapp.azure.com";
 
 export const getAuthToken = () => {
   if (typeof window !== "undefined") {
